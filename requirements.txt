@@ -1,0 +1,8 @@
+Flask
+Flask-SocketIO
+Flask-Login
+Flask-WTF
+Werkzeug
+Flask-BasicAuth
+Flask-SQLAlchemy
+Flask-Migrate
