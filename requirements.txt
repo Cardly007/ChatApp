@@ -2,7 +2,9 @@ Flask
 Flask-SocketIO
 Flask-Login
 Flask-WTF
+WTForms
 Werkzeug
 Flask-BasicAuth
 Flask-SQLAlchemy
 Flask-Migrate
+Flask-Admin
