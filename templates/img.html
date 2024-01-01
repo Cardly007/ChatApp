@@ -256,6 +256,7 @@
             <!-- Ajout du bouton de déconnexion -->
             <span>Chat Header</span>
             <button id="logout-button" onclick="logout()">Déconnexion</button>
+            <button id="clear-history-button" onclick="clearMessageHistory()">Supprimer l'historique</button>
         </div>
         <div id="messages-container">
                
@@ -287,12 +288,76 @@
 
     <script>
 
-        const current_user = `{{ username }}`; // Déclarer une variable pour stocker le nom d'utilisateur actuel
+        //const current_user = `{{ username }}`; // Déclarer une variable pour stocker le nom d'utilisateur actuel
         
+        // Récupérer le nom d'utilisateur depuis le stockage local
+        let current_user = localStorage.getItem('username');
+
+        
+        // Vérifier si le nom d'utilisateur est présent
+        if (!current_user) {
+            // Si le nom d'utilisateur n'est pas présent, utilisez le nom d'utilisateur actuel du backend
+            current_user = `{{ username }}`;
+            
+            // Stocker le nom d'utilisateur dans le stockage local
+            localStorage.setItem('username', current_user);
+        }
+
+
+        // Récupérer l'historique des messages depuis le local storage
+        const messageHistory = JSON.parse(localStorage.getItem('messageHistory')) || [];
+
+
         // Fonction pour se déconnecter
         function logout() {
+            // Supprimer le nom d'utilisateur du stockage local
+            localStorage.removeItem('username');
+
             window.location.href = '/logout'; // Mettez à jour avec l'URL correcte de déconnexion
         }
+
+        /*function getAndDisplayMessages() {
+            const messagesContainer = document.getElementById('messages-container');
+            const currentScrollPosition = messagesContainer.scrollTop;
+
+
+            fetch('/receive_message')
+                .then(response => response.json())
+                .then(data => {
+                    messagesContainer.innerHTML = '';
+                    
+                    // Afficher les messages de l'historique
+                    messageHistory.forEach(message => {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.textContent = message;
+                        messageDiv.classList.add('message');
+                        messagesContainer.appendChild(messageDiv);
+                    });
+
+                    // Afficher les nouveaux messages
+                    data.messages.forEach(message => {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.textContent = message;
+                        messageDiv.classList.add('message');
+                        messagesContainer.appendChild(messageDiv);
+
+                        // Ajouter le nouveau message à l'historique des messages
+                        messageHistory.push(message);
+                    });
+
+                    // Mettre à jour le stockage de session avec le nouvel historique
+                    sessionStorage.setItem('messageHistory', JSON.stringify(messageHistory));
+
+
+                    // Faites défiler automatiquement si le défilement automatique est activé
+                    if (autoScrollEnabled) {
+                        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    } else {
+                        // Si l'utilisateur fait défiler vers le haut, désactivez le défilement automatique
+                        autoScrollEnabled = (messagesContainer.scrollTop === (messagesContainer.scrollHeight - messagesContainer.offsetHeight));
+                    }
+                });
+        }*/
 
         function getAndDisplayMessages() {
             const messagesContainer = document.getElementById('messages-container');
@@ -302,12 +367,28 @@
                 .then(response => response.json())
                 .then(data => {
                     messagesContainer.innerHTML = '';
-                    data.messages.forEach(message => {
+
+                    // Afficher les messages de l'historique
+                    messageHistory.forEach(message => {
                         const messageDiv = document.createElement('div');
                         messageDiv.textContent = message;
                         messageDiv.classList.add('message');
                         messagesContainer.appendChild(messageDiv);
                     });
+
+                    // Afficher les nouveaux messages
+                    data.messages.forEach(message => {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.textContent = message;
+                        messageDiv.classList.add('message');
+                        messagesContainer.appendChild(messageDiv);
+
+                        // Ajouter le nouveau message à l'historique des messages
+                        messageHistory.push(message);
+                    });
+
+                    // Mettre à jour le local storage avec le nouvel historique
+                    localStorage.setItem('messageHistory', JSON.stringify(messageHistory));
 
                     // Faites défiler automatiquement si le défilement automatique est activé
                     if (autoScrollEnabled) {
@@ -358,6 +439,17 @@
 
         // Lire le fichier en tant que URL de données
         reader.readAsDataURL(image);
+    }
+
+
+    //fonction pour supprimer l'historique des messages 
+    function clearMessageHistory() {
+        // Effacer l'historique des messages dans le stockage de session
+        sessionStorage.removeItem('messageHistory');
+
+        // Effacer l'affichage actuel des messages dans la fenêtre de chat
+        const messagesContainer = document.getElementById('messages-container');
+        messagesContainer.innerHTML = '';
     }
 
 
@@ -440,6 +532,13 @@
                 }
 
                 messagesContainer.appendChild(messageDiv);
+
+                // Ajouter le nouveau message à l'historique des messages
+                const messageHistory = JSON.parse(sessionStorage.getItem('messageHistory')) || [];
+                messageHistory.push(data);
+                
+                // Mettre à jour le local storage avec le nouvel historique
+                sessionStorage.setItem('messageHistory', JSON.stringify(messageHistory));
             
         });
 
@@ -449,7 +548,7 @@
             displayImage(data); // Appeler la fonction displayImage avec les données reçues du serveur
         });
 
-        var socket = io();
+        //var socket = io();
 
         function sendMessage() {
             var message = document.getElementById('message').value;

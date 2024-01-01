@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Changement de Couleur</title>
+    <style>
+        body {
+            display: flex;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #left-panel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100px;
+            background-color: #f0f0f0;
+        }
+
+        #right-panel {
+            flex: 1;
+            background-color: #ffffff;
+            transition: background-color 0.5s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .color-button {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            border-radius: 50%;
+        }
+
+        .red { background-color: #ff6347; }
+        .yellow { background-color: #ffd700; }
+        .green { background-color: #00fa9a; }
+    </style>
+</head>
+<body>
+
+    <div id="left-panel">
+        <button class="color-button red" onclick="changeColor('red')"></button>
+        <button class="color-button yellow" onclick="changeColor('yellow')"></button>
+        <button class="color-button green" onclick="changeColor('green')"></button>
+    </div>
+
+    <div id="right-panel">
+        <!-- Le contenu de la partie droite va ici -->
+    </div>
+
+    <script>
+        function changeColor(color) {
+            document.getElementById('right-panel').style.backgroundColor = getColorCode(color);
+        }
+
+        function getColorCode(color) {
+            switch (color) {
+                case 'red':
+                    return '#ff6347';
+                case 'yellow':
+                    return '#ffd700';
+                case 'green':
+                    return '#00fa9a';
+                default:
+                    return '#ffffff';
+            }
+        }
+    </script>
+
+</body>
+</html>

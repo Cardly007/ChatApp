@@ -1,0 +1,1033 @@
+body {
+            margin: 0;
+            background-color: #333;
+            display: flex;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+        }
+        
+        #sidebar {
+            width: 250px;
+            height: 100%;
+            top: 0%;
+            margin-left: 100px;
+            background-color: #202020;
+            color: white;
+            overflow-x: hidden;
+            transition: 0.2s;
+            padding-top: 20px;
+            position: fixed;
+            z-index: 1;
+        }
+
+        #sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        #sidebar a:hover {
+            color: #f1f1f1;
+        }
+
+       
+
+        #header {
+            display: flex;
+            justify-content: space-between;
+            background-color: #333; 
+            padding: 10px;
+            align-items: center;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+
+        #logout-button {
+            padding: 10px;
+            margin-right: 10px;
+            background-color: #f44336;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #logout-button:hover {
+            background-color: #d32f2f;
+        }
+
+        #chat-container {
+            transition: margin-left 0.5s;
+            margin-left: 350px; /* Vous pouvez ajuster cette valeur selon vos besoins */
+            margin-right: 0; /* Ajoutez cette règle pour éliminer la marge à droite */
+            padding: 0px;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+    
+        #input-header {
+            display: flex;
+            justify-content: space-between;
+            background-color: #333;
+            padding: 10px;
+            align-items: center;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+    
+        #messages-container {
+            flex: 1;
+            overflow-y: scroll;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            background-image: url('https://i.pinimg.com/originals/94/65/d3/9465d39cbdcee717aa6062bc1cc144d8.jpg');
+            background-size: cover; /* Ajustez la taille de l'image de fond pour couvrir le conteneur */
+            background-repeat: no-repeat; /* Empêche l'image de se répéter */
+        }
+    
+        .message-header.sticky {
+            position: sticky;
+            top: 0;
+            background-color: #333;
+            padding: 10px;
+            z-index: 1;
+        }
+    
+        .message {
+            max-width: 70%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 15px;
+        }
+    
+        .sent {
+            align-self: flex-start;
+            background-color: #E5E5EA;
+            text-align: right;
+            border-top-left-radius: 5px;
+            box-shadow: 2px 2px 5px #888888;
+        }
+    
+        .received {
+            align-self: flex-end;
+            background-color: #DCF8C6;
+            text-align: left;
+            border-top-right-radius: 5px;
+            box-shadow: -2px 2px 5px #888888;
+        }
+    
+        #input-container {
+            display: flex;
+            justify-content: space-between;
+            background-color: #333;
+            padding: 10px;
+            align-items: center;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+    
+        #input-container input {
+            flex: 5;
+            padding: 10px;
+            margin-left: 30px;
+            border: none;
+            border-radius: 5px;
+            background-color: #444;
+            color: #fff;
+            outline: none;
+        }
+    
+        #input-container input[type="file"] {
+            flex: 1;
+            margin: 5px;
+        }
+    
+        #input-container input::placeholder {
+            color: #aaa;
+        }
+    
+        #input-container button {
+            padding: 20px;
+            margin: 5px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+    
+        #input-container button:hover {
+            background-color: #45a049;
+        }
+    
+        .icon {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            margin-left: -10px;
+            font-size: 22px;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+    
+        .icon:hover {
+            color: #fff;
+        }
+    
+        .image-icon {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            margin-left: 0px;
+            font-size: 24px;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+    
+        .image-icon:hover {
+            color: #fff;
+        }
+    
+        #preview {
+            margin-top: 0px;
+        }
+    
+        .message-header {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+    
+        .message-content {
+            margin-bottom: 5px;
+            text-align: left;
+        }
+    
+        .message-time {
+            font-size: 10px;
+            color: #888888;
+            text-align: right;
+        }
+    
+        .image-message {
+            display: flex;
+            flex-direction: column;
+            align-self: flex-start;
+            background-color: #E5E5EA;
+            max-width: 55%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 2px 2px 5px #888888;
+            position: relative;
+        }
+    
+        .image-message .username {
+            align-self: flex-start;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+    
+        .image-message img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+    
+        .image-message .message-time {
+            font-size: 12px;
+            color: #888888;
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+        }
+    
+        .image-message.sent {
+            align-self: flex-end;
+            background-color: #DCF8C6;
+            text-align: left;
+            border-top-right-radius: 5px;
+            box-shadow: -2px 2px 5px #888888;
+        }
+    
+        .image-message.received {
+            align-self: flex-start;
+            background-color: #E5E5EA;
+            text-align: right;
+            border-top-left-radius: 5px;
+            box-shadow: 2px 2px 5px #888888;
+        }
+
+
+        /* style pour la barre de recherche */
+        #searchResults {
+            list-style: none;
+            padding: 0;
+            margin-left: 20px;
+            border-radius: 5%;
+            position: absolute;
+            width: 200px;   /*ajustare la largeur du menu deroulant*/
+            background-color: #333;
+            border: 1px solid #ddd;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        #searchResults li {
+            cursor: pointer;
+            padding: 5px;
+            transition: background-color 0.3s;
+        }
+
+        #searchResults li:hover {
+            background-color: #585757;
+        }
+
+        /* Barre de recherche */
+        #searchInput {
+            padding: 10px 10px 10px 40px; /* Ajustez la valeur de la marge à gauche */
+            border: none;
+            border-radius: 30px;
+            background-color: #444;
+            color: #fff;
+            outline: none;
+            width: 100%;
+        }
+
+        /* Style pour la classe search-icon */
+        .search-icon {
+            position: absolute;
+            top: 50%;
+            left: 10px; /* Ajustez la valeur de la marge à gauche de l'icône */
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+       
+
+        #sidebar h4 {
+            margin-left: 10px;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+
+        /*barre*/
+        #barre {
+            width: 100px;
+            height: 100%;
+            background-color: #333;
+            color: #333; 
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 20px;
+            position: fixed;
+            z-index: 1;
+        }
+        #barre a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        #barre a:hover {
+            color: #f1f1f1;
+        }
+
+
+        /* bouton section  */
+
+        .sectionButton {
+            transition: background-color 0.2s ease; /* Ajout de la transition pour la couleur de fond */
+        }
+
+        .sectionButton.selected {
+            background-color: #ddd;
+        }
+
+        .hidden {
+            opacity: 0;
+            transition: opacity 0.3s ease; /* Ajout de la transition pour l'opacité */
+        }
+    
+        /* affixhe de la photo de l'utilisateur Fake */
+        .user-photo {
+            width: 30px; /* Ajustez la largeur selon vos besoins */
+            height: 30px; /* Ajustez la hauteur selon vos besoins */
+            border-radius: 50%; /* Pour un affichage rond */
+            margin-right: 5px; /* Marge à droite du message */
+        }
+        
+        /* Styles pour la div cliquable */
+        .clickable-user {
+            cursor: pointer;
+            margin-top: 5px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            background-color: #033031;
+        }
+
+        
+        /* .clickable-user {
+            background-color: #3498db; /* Couleur de fond 
+            padding: 10px;  Ajoutez un peu de marge intérieure 
+            margin-bottom: 5px;  Ajoutez de l'espace entre les utilisateurs 
+
+            /* Vous pouvez ajouter d'autres styles au besoin 
+        } */
+
+        /* Styles pour le nom de l'utilisateur */
+        .username-style {
+            color: #ffffff; /* Couleur du texte */
+            font-weight: bold; /* Texte en gras */
+
+            /* Vous pouvez ajouter d'autres styles au besoin */
+        }
+
+        /* point lunineux  */
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: 5px;  /* Ajustez la marge selon vos besoins */
+        }
+        
+
+        /* <!-- en tete de la sidebare --> */
+        .headers{
+            position: relative;
+            width: 100%;
+            height: 60px;
+            background: #2e312f;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+        }
+
+        .userimg
+        {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            overflow: hidden;
+            border-radius: 50%;
+            color: color-mix(in hsl shorter hue, color percentage, color percentage);
+
+        }
+        .cover {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+
+        .nav_icons
+        {
+            display: flex;
+        }
+
+        .nav_icons li
+        {
+            display: flex;
+            list-style: none;
+            cursor: pointer;
+            color:■#51585c;
+            font-size: 1.5em;
+            margin-left: 22px;
+        }
+
+        /* Style pour le pop-up */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        /* Style pour les boutons de section */
+        .sectionButton {
+            background-color: #7e7e7e;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        /* Style pour le bouton de création de groupe */
+        .createGroupButton {
+            background-color: #008CBA;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        /* Style pour les boutons de chatroom */
+        .load-group-button {
+            background-color: #555555;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 30%;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+
+
+        /* Style pour le thème sombre */
+        body.dark-theme {
+                margin: 0;
+                /* background-color: #efe6bdb3; */
+                background: linear-gradient(to bottom, #133c32, #86c073);
+                display: flex;
+                flex-direction: column;
+                font-family: Arial, sans-serif;
+                height: 100vh;
+            
+            
+            #sidebar {
+                width: 250px;
+                height: 100%;
+                margin-left: 100px;
+                /* background: linear-gradient(to top, #c7baa31f, #fff8cf); */
+                background: linear-gradient(to bottom, #133c32, #86c073);
+                background-color: #c7baa3;
+                color: black;
+                overflow-x: hidden;
+                transition: 0.2s;
+                padding-top: 20px;
+                position: fixed;
+                z-index: 1;
+            }
+
+            #sidebar a {
+                padding: 8px 8px 8px 32px;
+                text-decoration: none;
+                font-size: 18px;
+                color: #1b1b1b;
+                display: block;
+                transition: 0.3s;
+            }
+
+            #sidebar a:hover {
+                color: #f1f1f1;
+            }
+
+        
+
+            #header {
+                display: flex;
+                justify-content: space-between;
+                background: linear-gradient(to left, #133c32, #86c073);
+                padding: 10px;
+                align-items: center;
+                color: white;
+                position: sticky;
+                top: 0;
+                z-index: 2;
+            }
+
+            #logout-button {
+                padding: 10px;
+                margin-right: 10px;
+                background-color: #0f4f06;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            #logout-button:hover {
+                background-color: #2fd348;
+            }
+
+            #chat-container {
+                transition: margin-left 0.5s;
+                margin-left: 350px; /* Vous pouvez ajuster cette valeur selon vos besoins */
+                margin-right: 0; /* Ajoutez cette règle pour éliminer la marge à droite */
+                padding: 0px;
+                display: flex;
+                flex-direction: column;
+                height: 100vh;
+            }
+
+        
+            #input-header {
+                display: flex;
+                justify-content: space-between;
+                background-color: #139045;
+                padding: 10px;
+                align-items: center;
+                color: rgb(0, 0, 0);
+                position: sticky;
+                top: 0;
+                z-index: 1;
+            }
+        
+            #messages-container {
+                flex: 1;
+                overflow-y: scroll;
+                display: flex;
+                flex-direction: column;
+                padding: 20px;
+                background-image: url('https://i.pinimg.com/originals/a5/c8/c4/a5c8c43b2274b942d7deb31796796bbd.jpg');
+                background-size: cover; /* Ajustez la taille de l'image de fond pour couvrir le conteneur */
+                background-repeat: no-repeat; /* Empêche l'image de se répéter */
+            }
+        
+            .message-header.sticky {
+                position: sticky;
+                top: 0;
+                background-color: #333;
+                padding: 10px;
+                z-index: 1;
+            }
+        
+            .message {
+                max-width: 70%;
+                padding: 10px;
+                margin-bottom: 10px;
+                border-radius: 15px;
+            }
+        
+            .sent {
+                align-self: flex-start;
+                background-color: #E5E5EA;
+                text-align: right;
+                border-top-left-radius: 5px;
+                box-shadow: 2px 2px 5px #888888;
+            }
+        
+            .received {
+                align-self: flex-end;
+                background-color: #DCF8C6;
+                text-align: left;
+                border-top-right-radius: 5px;
+                box-shadow: -2px 2px 5px #888888;
+            }
+        
+            #input-container {
+                display: flex;
+                justify-content: space-between;
+                /* background-color: #333; */
+                background-color: #c7baa3;
+                padding: 10px;
+                align-items: center;
+                color: rgb(0, 0, 0);
+                position: sticky;
+                top: 0;
+                z-index: 1;
+            }
+        
+            #input-container input {
+                flex: 5;
+                padding: 10px;
+                margin-left: 30px;
+                border: none;
+                border-radius: 5px;
+                background-color: whitesmoke;
+                color: #000000;
+                outline: none;
+            }
+        
+            #input-container input[type="file"] {
+                flex: 1;
+                margin: 5px;
+            }
+        
+            #input-container input::placeholder {
+                color: #aaa;
+            }
+        
+            #input-container button {
+                padding: 20px;
+                margin: 5px;
+                background-color: #4CAF50;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+        
+            #input-container button:hover {
+                background-color: #45a049;
+            }
+        
+            .icon {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                margin-left: -10px;
+                font-size: 22px;
+                color: #aaa;
+                cursor: pointer;
+                transition: color 0.3s ease;
+            }
+        
+            .icon:hover {
+                color: #fff;
+            }
+        
+            .image-icon {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                margin-left: 0px;
+                font-size: 24px;
+                color: #aaa;
+                cursor: pointer;
+                transition: color 0.3s ease;
+            }
+        
+            .image-icon:hover {
+                color: #fff;
+            }
+        
+            #preview {
+                margin-top: 0px;
+            }
+        
+            .message-header {
+                display: flex;
+                flex-direction: column;
+                text-align: left;
+            }
+        
+            .message-content {
+                margin-bottom: 5px;
+                text-align: left;
+            }
+        
+            .message-time {
+                font-size: 10px;
+                color: #888888;
+                text-align: right;
+            }
+        
+            .image-message {
+                display: flex;
+                flex-direction: column;
+                align-self: flex-start;
+                background-color: #E5E5EA;
+                max-width: 55%;
+                padding: 10px;
+                margin-bottom: 20px;
+                border-radius: 15px;
+                box-shadow: 2px 2px 5px #888888;
+                position: relative;
+            }
+        
+            .image-message .username {
+                align-self: flex-start;
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+        
+            .image-message img {
+                max-width: 100%;
+                max-height: 100%;
+                border-radius: 12px;
+                margin-bottom: 10px;
+            }
+        
+            .image-message .message-time {
+                font-size: 12px;
+                color: #888888;
+                position: absolute;
+                bottom: 5px;
+                right: 5px;
+            }
+        
+            .image-message.sent {
+                align-self: flex-end;
+                background-color: #DCF8C6;
+                text-align: left;
+                border-top-right-radius: 5px;
+                box-shadow: -2px 2px 5px #888888;
+            }
+        
+            .image-message.received {
+                align-self: flex-start;
+                background-color: #E5E5EA;
+                text-align: right;
+                border-top-left-radius: 5px;
+                box-shadow: 2px 2px 5px #888888;
+            }
+
+
+            /* style pour la barre de recherche */
+            #searchResults {
+                list-style: none;
+                padding: 0;
+                margin-left: 20px;
+                border-radius: 5%;
+                position: absolute;
+                width: 200px;   /*ajustare la largeur du menu deroulant*/
+                background-color: #133c32;
+                border: 1px solid #ddd;
+                max-height: 200px;
+                color: white;
+                overflow-y: auto;
+                display: none;
+            }
+
+            #searchResults li {
+                cursor: pointer;
+                padding: 5px;
+                transition: background-color 0.3s;
+            }
+
+            #searchResults li:hover {
+                background-color: #585757;
+            }
+
+            /* Barre de recherche */
+            #searchInput {
+                padding: 10px 10px 10px 40px; /* Ajustez la valeur de la marge à gauche */
+                border: none;
+                border-radius: 30px;
+                background-color: #133c32;
+                color: #fff;
+                outline: none;
+                width: 100%;
+            }
+
+            /* Style pour la classe search-icon */
+            .search-icon {
+                position: absolute;
+                top: 50%;
+                left: 10px; /* Ajustez la valeur de la marge à gauche de l'icône */
+                transform: translateY(-50%);
+                z-index: 1;
+            }
+
+        
+
+            #sidebar h4 {
+                margin-left: 10px;
+                font-family: 'Times New Roman', Times, serif;
+            }
+
+
+            /*barre*/
+            #barre {
+                width: 100px;
+                height: 100%;
+                /* background-color: #133c32; */
+                background: linear-gradient(to bottom, #133c32, #86c073);
+                color: #133c32; 
+                overflow-x: hidden;
+                transition: 0.3s;
+                padding-top: 20px;
+                position: fixed;
+                z-index: 1;
+            }
+            #barre a {
+                padding: 8px 8px 8px 32px;
+                text-decoration: none;
+                font-size: 18px;
+                color: #818181;
+                display: block;
+                transition: 0.3s;
+            }
+
+            #barre a:hover {
+                color: #f1f1f1;
+            }
+
+
+            /* bouton section  */
+
+            .sectionButton {
+                transition: background-color 0.2s ease; /* Ajout de la transition pour la couleur de fond */
+            }
+
+            .sectionButton.selected {
+                background-color: #ddd;
+            }
+
+            .hidden {
+                opacity: 0;
+                transition: opacity 0.3s ease; /* Ajout de la transition pour l'opacité */
+            }
+        
+            /* affixhe de la photo de l'utilisateur Fake */
+            .user-photo {
+                width: 30px; /* Ajustez la largeur selon vos besoins */
+                height: 30px; /* Ajustez la hauteur selon vos besoins */
+                border-radius: 50%; /* Pour un affichage rond */
+                margin-right: 5px; /* Marge à droite du message */
+            }
+            
+            /* Styles pour la div cliquable */
+            .clickable-user {
+                cursor: pointer;
+                margin-top: 5px;
+                padding: 5px;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+                background-color: #033031;
+            }
+
+
+            /* Styles pour le nom de l'utilisateur */
+            .username-style {
+                color: #ffffff; /* Couleur du texte */
+                font-weight: bold; /* Texte en gras */
+
+                /* Vous pouvez ajouter d'autres styles au besoin */
+            }
+
+            /* point lunineux  */
+            .status-dot {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                margin-left: 5px;  /* Ajustez la marge selon vos besoins */
+            }
+            
+
+            /* <!-- en tete de la sidebare --> */
+            .headers{
+                position: relative;
+                width: 100%;
+                height: 60px;
+                background: linear-gradient(to right, #133c32, #86c073);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+            }
+
+            .userimg
+            {
+                position: relative;
+                width: 40px;
+                height: 40px;
+                overflow: hidden;
+                border-radius: 50%;
+                color: color-mix(in hsl shorter hue, color percentage, color percentage);
+
+            }
+            .cover {
+                object-fit: cover;
+                width: 100%;
+                height: 100%;
+            }
+
+            .nav_icons
+            {
+                display: flex;
+            }
+
+            .nav_icons li
+            {
+                display: flex;
+                list-style: none;
+                cursor: pointer;
+                color:■#51585c;
+                font-size: 1.5em;
+                margin-left: 22px;
+            }
+
+            /* Style pour le pop-up */
+            .popup {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                padding: 20px;
+                /* background-color: #fff; */
+                background: linear-gradient(to bottom, #133c32, #86c073);
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+                z-index: 1000;
+            }
+            /* Style pour les boutons de section */
+            .sectionButton {
+                background-color: #5d7a5b;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+            }
+
+            /* Style pour le bouton de création de groupe */
+            .createGroupButton {
+                background-color: #008CBA;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                border-radius: 50%;
+                cursor: pointer;
+            }
+            
+            /* Style pour les boutons de chatroom */
+            .load-group-button {
+                background-color: #033031;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                border-radius: 30%;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+            }
+        }
