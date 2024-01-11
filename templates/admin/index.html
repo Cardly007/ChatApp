@@ -1,0 +1,48 @@
+{% extends admin_base_template %}
+
+{% block head_css %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.5.1/viewer.min.css">
+    <style>
+        #database-diagram-container {
+            border: 2px solid #ddd;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        #database-diagram-image {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.rawgit.com/noelboss/featherlight/1.7.13/release/featherlight.min.js"></script>
+    <script src="https://cdn.rawgit.com/noelboss/featherlight/1.7.13/release/featherlight.gallery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.featherlight-image').featherlight();
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <h1>Bienvenue dans la base de données !</h1>
+    <h4>Pour vous aider à explorer cette base de données, nous avons ajouté ci-dessous un schéma de celle-ci: </h4>
+    <div id="database-diagram-container">
+        <a href="{{ url_for('static', filename='diagramme.png') }}" class="featherlight-image">
+            <img id="database-diagram-image" src="{{ url_for('static', filename='diagramme.png') }}" alt="Diagrammme de la BD">
+        </a>
+    </div>
+    <br>
+    <a href="{{ url_for('home') }}">Retour à la page d'accueil</a>
+    <a href="{{ url_for('clients') }}">Retour aux paramètres</a>
+{% endblock body %}
+
+

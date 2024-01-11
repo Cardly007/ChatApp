@@ -73,7 +73,6 @@ body {
             height: 100vh;
         }
 
-    
         #input-header {
             display: flex;
             justify-content: space-between;
@@ -371,13 +370,18 @@ body {
             transition: opacity 0.3s ease; /* Ajout de la transition pour l'opacité */
         }
     
-        /* affixhe de la photo de l'utilisateur Fake */
+        /* affiche de la photo de l'utilisateur Fake */
         .user-photo {
-            width: 30px; /* Ajustez la largeur selon vos besoins */
-            height: 30px; /* Ajustez la hauteur selon vos besoins */
+            width: 50px; /* Ajustez la largeur selon vos besoins */
+            height: 50px; /* Ajustez la hauteur selon vos besoins */
             border-radius: 50%; /* Pour un affichage rond */
             margin-right: 5px; /* Marge à droite du message */
         }
+        .flex-container {
+            display: flex;
+            align-items: center; /* Alignement vertical au centre */
+        }
+        
         
         /* Styles pour la div cliquable */
         .clickable-user {
@@ -512,6 +516,17 @@ body {
             font-size: 16px;
             margin: 4px 2px;
             cursor: pointer;
+        }
+
+        /* style est en train d'excrire  */
+        #typing-indicator {
+            font-style: italic;
+            color: #bebebe; /* Couleur grise, ajustez selon vos préférences */
+            /* padding: 5px; */
+            background-image: url('https://i.pinimg.com/originals/94/65/d3/9465d39cbdcee717aa6062bc1cc144d8.jpg');
+            background-size: cover; /* Ajustez la taille de l'image de fond pour couvrir le conteneur */
+            background-repeat: no-repeat; /* Empêche l'image de se répéter */
+            margin-bottom: 0%;
         }
 
 
@@ -732,6 +747,7 @@ body {
             }
         
             .message-header {
+               
                 display: flex;
                 flex-direction: column;
                 text-align: left;
@@ -895,13 +911,27 @@ body {
                 transition: opacity 0.3s ease; /* Ajout de la transition pour l'opacité */
             }
         
-            /* affixhe de la photo de l'utilisateur Fake */
+            /* affixhe de la photo de l'utilisateur  */
             .user-photo {
-                width: 30px; /* Ajustez la largeur selon vos besoins */
-                height: 30px; /* Ajustez la hauteur selon vos besoins */
+                width: 50px; /* Ajustez la largeur selon vos besoins */
+                height: 50px; /* Ajustez la hauteur selon vos besoins */
                 border-radius: 50%; /* Pour un affichage rond */
                 margin-right: 5px; /* Marge à droite du message */
+                
             }
+
+            
+            
+
+            /* mise en forme cote a cote pas encore fonctionnelle  */
+            .user-photo-container, .message-header {
+                display: inline-block;
+                width: 100%; /* 49% pour laisser un espace entre les deux divs */
+                word-wrap: break-word; /* Ajoutez cette ligne pour que le texte passe à la ligne */
+                box-sizing: border-box; /* Pour inclure le padding et la bordure dans la largeur */
+                vertical-align: top; /* Aligner le contenu en haut */
+            }
+            
             
             /* Styles pour la div cliquable */
             .clickable-user {
@@ -1030,4 +1060,17 @@ body {
                 margin: 4px 2px;
                 cursor: pointer;
             }
+
+            /* style est en train d'excrire  */
+            #typing-indicator {
+                font-style: italic;
+                color: #0e620c; /* Couleur grise, ajustez selon vos préférences */
+                /* padding: 5px; */
+                background-image: url('https://i.pinimg.com/originals/a5/c8/c4/a5c8c43b2274b942d7deb31796796bbd.jpg');
+                background-size: cover; /* Ajustez la taille de l'image de fond pour couvrir le conteneur */
+                background-repeat: no-repeat; /* Empêche l'image de se répéter */
+                margin-bottom: 0%;
+            }
+
+            
         }

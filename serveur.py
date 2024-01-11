@@ -2,7 +2,7 @@
 
 
 from flask import Flask, render_template, render_template_string,request, redirect, url_for, jsonify, session, send_from_directory, flash
-from flask_socketio import SocketIO, send
+from flask_socketio import SocketIO, send,emit
 from flask_login import current_user
 from flask_wtf import FlaskForm
 from time import localtime, strftime
@@ -32,6 +32,7 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Limitez la taille maximale du fichier (ici, 16 Mo)
 app.config['UPLOAD_FOLDER'] = '/Users/cardly/Downloads/PROJET/upload'  #remplacez le par l'emplacement de votre fichier upload
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(BASE_DIR, 'clients.db')
+
 
 ALLOWED_IMAGE_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
@@ -130,8 +131,12 @@ class ChatRoom(db.Model):
 
 
 
-# interface admin 
-admin = Admin(app, name='Admin', template_mode='bootstrap3')
+# # interface admin avec
+# admin = Admin(app, name='Admin', template_mode='bootstrap3', 
+#               extra_css=[url_for('static', filename='admin_custom.css')])
+
+admin = Admin(app, name='Admin', template_mode='bootstrap4')
+
 # Ajoutez votre modèle à l'interface d'administration
 admin.add_view(ModelView(HtmlCode, db.session))
 admin.add_view(ModelView(Message, db.session))
@@ -140,9 +145,6 @@ admin.add_view(ModelView(PrivateMessage, db.session))
 admin.add_view(ModelView(OnlineStatus, db.session))
 admin.add_view(ModelView(ChatRoom, db.session))
 admin.add_view(ModelView(User, db.session))
-
-
-
 
 
 
@@ -208,7 +210,7 @@ def login():
 def index():
     sections = HtmlCode.query.all()
     chat_rooms = ChatRoom.query.all()
-    return render_template('side2.html', username = current_user.username,sections=sections,user = current_user, chat_rooms=chat_rooms)
+    return render_template('side2.html', username = current_user.username,sections=sections,user_pic = current_user.photo_profile, user= current_user, chat_rooms=chat_rooms)
 
 # Ajoutez cette nouvelle route à votre fichier app.py
 @app.route('/get_content/<section_id>', methods=['GET'])
@@ -261,11 +263,15 @@ def profile():
 
 
 
-
-
+# Fonction de vue pour le groupe de routes /admin
+@app.route('/admin/<path:subpath>')
+@basic_auth.required
+def admins(subpath):
+    return redirect(url_for('admin.index'))
 
 #route pour aller vers la bue admininstrateur 
 @app.route('/admin')
+@basic_auth.required #  protégée par le décorateur @basic_auth.required, ce qui signifie que seuls les administrateurs  pourront accéder à cette page. 
 def admin():
     return redirect(url_for('admin.index'))
 
@@ -312,17 +318,6 @@ def register():
         return redirect(url_for('home', message='Nouvel utilisateur créé ! Connectez-vous maintenant'))  # Redirection vers la page d'accueil avec un message
 
     return render_template('r2.html', form=form) 
-# @app.route('/register', methods=['GET', 'POST'])
-# def register():
-#     form = RegistrationForm()
-#     if form.validate_on_submit():
-#         hashed_password = generate_password_hash(form.password.data, method='pbkdf2:sha256')
-#         new_user = User(username=form.username.data, password=hashed_password)
-#         db.session.add(new_user)
-#         db.session.commit()
-#         return redirect(url_for('home', message='Nouvel utilisateur créé ! Connectez vous mmaintenant'))  # Redirection vers la page d'accueil avec un message
-#     return render_template('r2.html', form=form)
-
 
 # Route pour supprimer un client de la base de donnee 
 @app.route('/delete_client/<int:user_id>', methods=['POST'])
@@ -368,32 +363,12 @@ def unauthorized():
 
 # GESTION DES MESSAGES 
 
-
-
-# Dans la route send_message
-@app.route('/send_message', methods=['POST'])
-@login_required #  protégée par le décorateur @login_required, ce qui signifie que seuls les utilisateurs connectés pourront accéder à cette page. 
-def send_message():
-    if request.method == 'POST':
-        message = request.json['message']
-
-        username = current_user.username 
-        full_message = f"{username}: {message}"  # Associe le message au nom de l'utilisateur
-        #client_socket.sendall(full_message.encode())
-
-        # Ajoutez la photo de profil de l'utilisateur
-        user_photo = current_user.photo_profile
-
-        socketio.emit('message', {'message': msg['message'], 'username': msg['username'], 'time_stamp': strftime('%I:%M%p', localtime())}, broadcast=True)
-
-        return jsonify({'status': 'success'})
-
 # Dans la fonction pour la gestion des message  
 @socketio.on('message')
 def handle_message(msg):
     print('Message:', str(msg))
-    print('photo:', msg.get('photo'))  # Utilisez .get pour éviter KeyError si la clé est absente
-    send({'message': msg['message'], 'username': msg['username'], 'photo': msg.get('photo'), 'time_stamp': strftime('%I:%M%p', localtime())}, broadcast=True)
+    # print('photo:', msg.get('photo'))  # Utilisez .get pour éviter KeyError si la clé est absente
+    send({'message': msg['message'], 'username': msg['username'], 'photo': msg['photo'], 'time_stamp': strftime('%I:%M%p', localtime())},broadcast=True)
 
 
 @socketio.on('image')
@@ -592,6 +567,15 @@ def send_messago(room_id):
 
     return redirect(url_for('chat_room', room_id=room_id))
 
+
+
+# route pour la fontion est en train d'ecrire...
+@socketio.on('typing')
+def handle_typing(data):
+    # room = data['room']
+    # room=room
+    username = data['username']
+    socketio.emit('typing', {'username': username})  
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
